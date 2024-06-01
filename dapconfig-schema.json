@@ -1,0 +1,181 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "properties": {
+        "version": {
+            "type": "string",
+            "enum": [
+                "0.2.0"
+            ]
+        },
+        "configurations": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name for the configuration entry"
+                    },
+                    "type": {
+                        "description": "Debug adapter to use for this configuration",
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "enum": [
+                                    "java",
+                                    "debugpy"
+                                ]
+                            }
+                        ]
+                    },
+                    "request": {
+                        "type": "string",
+                        "enum": [
+                            "launch",
+                            "attach"
+                        ]
+                    },
+                    "noDebug": {
+                        "type": "boolean",
+                        "default": false
+                    }
+                },
+                "allOf": [
+                    {
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "const": "java"
+                                },
+                                "request": {
+                                    "const": "launch"
+                                }
+                            }
+                        },
+                        "then": {
+                            "properties": {
+                                "args": {
+                                    "type": "string",
+                                    "description": "Arguments to pass to the application as string"
+                                },
+                                "vmArgs": {
+                                    "type": "string",
+                                    "description": "System properties for the JVM"
+                                },
+                                "mainClass": {
+                                    "type": "string",
+                                    "description": "Fully qualified name of the class containing the main method"
+                                },
+                                "console": {
+                                    "type": "string",
+                                    "enum": [
+                                        "internalConsole",
+                                        "integratedTerminal",
+                                        "externalTerminal"
+                                    ]
+                                },
+                                "projectName": {
+                                    "type": "string",
+                                    "description": "The project in which the debugger searches for classes. Required if the workspace has multiple java projects."
+                                },
+                                "env": {
+                                    "type": "object",
+                                    "description": "Extra environment variables"
+                                },
+                                "stopOnEntry": {
+                                    "type": "boolean"
+                                },
+                                "stepFilters": {
+                                    "type": "object",
+                                    "properties": {
+                                        "skipClasses": {
+                                            "type": "array",
+                                            "items": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "enum": [
+                                                            "$JDK",
+                                                            "$Libraries",
+                                                            "java.lang.ClassLoader"
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "skipSynthetics": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "const": "java"
+                                },
+                                "request": {
+                                    "const": "attach"
+                                }
+                            }
+                        },
+                        "then": {
+                            "properties": {
+                                "hostName": {
+                                    "type": "string"
+                                },
+                                "port": {
+                                    "type": "number"
+                                },
+                                "processId": {
+                                    "type": "number"
+                                },
+                                "projectName": {
+                                    "type": "string",
+                                    "description": "The project in which the debugger searches for classes. Required if the workspace has multiple java projects."
+                                },
+                                "stepFilters": {
+                                    "type": "object",
+                                    "properties": {
+                                        "skipClasses": {
+                                            "type": "array",
+                                            "items": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "enum": [
+                                                            "$JDK",
+                                                            "$Libraries",
+                                                            "java.lang.ClassLoader"
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "skipSynthetics": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "required": [
+        "version",
+        "configurations"
+    ]
+}
