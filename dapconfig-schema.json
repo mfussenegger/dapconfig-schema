@@ -169,6 +169,74 @@
                                 }
                             }
                         }
+                    },
+                    {
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "const": "debugpy"
+                                }
+                            }
+                        },
+                        "then": {
+                            "properties": {
+                                "module": {
+                                    "type": "string",
+                                    "description": "Name of the module to be debugged"
+                                },
+                                "program": {
+                                    "type": "string",
+                                    "description": "Absolute path to the program"
+                                },
+                                "code": {
+                                    "type": "string",
+                                    "description": "Code to execute in string form"
+                                },
+                                "args": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "description": "Command line arguments passed to the program"
+                                },
+                                "console": {
+                                    "enum": [
+                                        "internalConsole",
+                                        "integratedTerminal",
+                                        "externalTerminal"
+                                    ],
+                                    "default": "integratedTerminal"
+                                },
+                                "cwd": {
+                                    "type": "string",
+                                    "description": "Absolute path to the working directory of the program being debugged"
+                                },
+                                "env": {
+                                    "type": "object",
+                                    "description": "Environment variables defined as a key value pair"
+                                },
+                                "django": {
+                                    "type": "boolean",
+                                    "description": "When true enables Django templates.",
+                                    "default": false
+                                },
+                                "gevent": {
+                                    "type": "boolean",
+                                    "description": "When true enables debugging of gevent monkey-patched code",
+                                    "default": false
+                                },
+                                "jinja": {
+                                    "type": "boolean",
+                                    "description": "When true enables Jinja2 template debugging (e.g. Flask)",
+                                    "default": false
+                                },
+                                "justMyCode": {
+                                    "type": "boolean",
+                                    "description": "When true debug only user-written code",
+                                    "default": true
+                                }
+                            }
+                        }
                     }
                 ]
             }
