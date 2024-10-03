@@ -26,7 +26,8 @@
                             {
                                 "enum": [
                                     "java",
-                                    "debugpy"
+                                    "debugpy",
+                                    "gdb"
                                 ]
                             }
                         ]
@@ -234,6 +235,70 @@
                                     "type": "boolean",
                                     "description": "When true debug only user-written code",
                                     "default": true
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "const": "gdb"
+                                }
+                            }
+                        },
+                        "then": {
+                            "properties": {
+                                "args": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "description": "Command line arguments passed to the program"
+                                },
+                                "cwd": {
+                                    "type": "string",
+                                    "description": "Absolute path to the working directory of the program being debugged"
+                                },
+                                "env": {
+                                    "type": "object",
+                                    "description": "Environment variables defined as a key value pair"
+                                },
+                                "program": {
+                                    "type": "string",
+                                    "description": "Absolute path to the program"
+                                },
+                                "stopAtBeginningOfMainSubprogram": {
+                                    "type": "boolean",
+                                    "description": "When ‘True’, GDB will set a temporary breakpoint at the program’s main procedure, using the same approach as the start command"
+                                },
+                                "stopOnEntry": {
+                                    "type": "boolean",
+                                    "description": "When ‘True’, GDB will set a temporary breakpoint at the program’s first instruction, using the same approach as the starti command"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "const": "gdb"
+                                },
+                                "request": {
+                                    "const": "attach"
+                                }
+                            }
+                        },
+                        "then": {
+                            "properties": {
+                                "pid": {
+                                    "type": "number",
+                                    "description": "Process ID to which GDB should attach"
+                                },
+                                "target": {
+                                    "type": "string",
+                                    "description": "target to which GDB should connect. This is a string and is passed to the `target remote` command. See https://sourceware.org/gdb/current/onlinedocs/gdb#Connecting"
                                 }
                             }
                         }
