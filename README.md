@@ -12,7 +12,7 @@ Add a `$schema` line to your `.vscode/launch.json` file:
 
 ```json
 {
-   "$schema": "https://raw.githubusercontent.com/mfussenegger/dapconfig-schema/master/dapconfig-schema.json",
+   "$schema": "https://codeberg.org/mfussenegger/dapconfig-schema/raw/branch/master/dapconfig-schema.json",
    "version": "0.2.0",
    "configurations": [
    ]
